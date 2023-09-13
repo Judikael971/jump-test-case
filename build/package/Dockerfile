@@ -20,7 +20,6 @@ RUN apk add --no-cache tzdata \
     && mkdir -p /app/log \
     && chown -R nobody:nobody /app
 
-COPY --from=builder /app/configs /app/configs
 COPY --from=builder /app/technical_case /app
 
 USER nobody:nobody
