@@ -40,8 +40,27 @@ func PostTransaction(c *gin.Context) {
 	}
 
 	user.Balance = roundFloat(user.Balance + invoice.Amount)
-	connectors.Connector.Save(&transaction)
-	connectors.Connector.Save(&invoice)
-	connectors.Connector.Save(&user)
+	tx := connectors.Connector.Begin()
+	defer tx.Rollback()
+
+	updated := tx.Save(&transaction)
+	if updated.Error != nil {
+		tx.Rollback()
+		c.AbortWithStatus(http.StatusInternalServerError)
+		return
+	}
+	updated = tx.Save(&invoice)
+	if updated.Error != nil {
+		tx.Rollback()
+		c.AbortWithStatus(http.StatusInternalServerError)
+		return
+	}
+	updated = tx.Save(&user)
+	if updated.Error != nil {
+		tx.Rollback()
+		c.AbortWithStatus(http.StatusInternalServerError)
+		return
+	}
+	tx.Commit()
 	c.AbortWithStatus(http.StatusNoContent)
 }

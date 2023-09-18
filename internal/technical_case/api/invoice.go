@@ -21,11 +21,15 @@ func PostInvoice(c *gin.Context) {
 		return
 	}
 	invoice := models.Invoices{UserId: user.Id, Status: "pending", Label: queryData.Label, Amount: roundFloat(queryData.Amount)}
-	inserted := connectors.Connector.Create(&invoice)
+	tx := connectors.Connector.Begin()
+	defer tx.Rollback()
+	inserted := tx.Create(&invoice)
 	if inserted.Error != nil {
+		tx.Rollback()
 		c.AbortWithStatus(http.StatusInternalServerError)
 		return
 	}
+	tx.Commit()
 	c.AbortWithStatus(http.StatusNoContent)
 }
 
