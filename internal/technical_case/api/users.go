@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 	"jump/technical-case/internal/technical_case/models"
-	"jump/technical-case/internal/util/connectors"
+	"jump/technical-case/internal/utils/connectors"
 	"net/http"
 )
 

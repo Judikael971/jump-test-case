@@ -1,19 +1,17 @@
 package api
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 	"jump/technical-case/internal/technical_case/models"
-	"jump/technical-case/internal/util/connectors"
-	"jump/technical-case/internal/util/validators"
+	"jump/technical-case/internal/utils/connectors"
+	"jump/technical-case/internal/utils/validators"
 	"net/http"
 )
 
 func PostInvoice(c *gin.Context) {
 	var queryData = validators.InvoiceRequest{}
 	if err := c.ShouldBind(&queryData); err != nil {
-		fmt.Println(err.Error())
 		c.AbortWithStatus(http.StatusBadRequest)
 		return
 	}

@@ -8,7 +8,7 @@ import (
 	"gorm.io/gorm/logger"
 	"io"
 	"jump/technical-case/internal/technical_case/api"
-	"jump/technical-case/internal/util/connectors"
+	"jump/technical-case/internal/utils/connectors"
 	"log"
 	"os"
 	"time"

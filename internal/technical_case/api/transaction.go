@@ -3,8 +3,8 @@ package api
 import (
 	"github.com/gin-gonic/gin"
 	"jump/technical-case/internal/technical_case/models"
-	"jump/technical-case/internal/util/connectors"
-	"jump/technical-case/internal/util/validators"
+	"jump/technical-case/internal/utils/connectors"
+	"jump/technical-case/internal/utils/validators"
 	"net/http"
 )
 
